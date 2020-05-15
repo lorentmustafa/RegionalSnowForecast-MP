@@ -19,12 +19,12 @@ public class Database extends SQLiteOpenHelper {
         String strQuery = "create table "+tblUsers+" (" +
                 User.ID + " integer primary key autoincrement,"+
                 User.Name +" text not null,"+
-                User.Email +" text not null,"+
+                User.Email +" text not null unique,"+
                 User.Address +" text not null,"+
                 User.Region +" text not null,"+
                 User.Password +" text not null"+
                 ")";
-
+//        Email must be unique
         db.execSQL(strQuery);
 
     }

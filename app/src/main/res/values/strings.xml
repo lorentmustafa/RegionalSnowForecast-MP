@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">RegionalSnowForecast</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="register">Register</string>
+    <string name="notRegisteredYet">Not registered yet?</string>
+    <string name="haveAnAccount">Have an account?</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="region">Region</string>
+    <string name="address">Address</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="helloThere">Hello there!</string>
+    <string name="welcome">Welcome!</string>
+    <string name="niceToSeeYouAgain">Nice to see you again!</string>
+    <string name="nameerror">Name must not be empty!</string>
+    <string name="emailerror">Enter a valid Email!</string>
+    <string name="addresserror">Enter a valid Address!</string>
+    <string name="regionerror">Enter a valid region!</string>
+    <string name="passwordlengtherror">Password must have at least 8 characters!</string>
+    <string name="passwordmatcherror">Passwords do not match!</string>
+    <string name="emptyconfirmpassword">Confirm Password can not be empty!</string>
+    <string name="accountalreadyexists">An account with this email already exists!</string>
+
 </resources>
