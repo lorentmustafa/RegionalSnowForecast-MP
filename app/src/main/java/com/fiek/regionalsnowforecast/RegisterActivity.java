@@ -18,6 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -45,12 +50,14 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String hashedPass = PasswordHash.SHA256(etPassword);
+                Toast.makeText(RegisterActivity.this, "Hashed: "+hashedPass, Toast.LENGTH_LONG).show();
                 ContentValues cv = new ContentValues();
                 cv.put(User.Name, etName.getText().toString());
                 cv.put(User.Email, etEmail.getText().toString());
                 cv.put(User.Address, etAddress.getText().toString());
                 cv.put(User.Region, etRegion.getText().toString());
-                cv.put(User.Password, etPassword.getText().toString());
+                cv.put(User.Password, hashedPass);
 
                 SQLiteDatabase objDb = new Database(RegisterActivity.this, "RSFDB").getWritableDatabase();
 
@@ -163,4 +170,5 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
     }
+
 }
