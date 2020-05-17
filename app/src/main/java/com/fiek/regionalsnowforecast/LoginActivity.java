@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginAuthentication(etEmail, etPassword);
+
             }
         });
 
@@ -60,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
     public void loginAuthentication(EditText etEmail, EditText etPassword){
         String email = etEmail.getText().toString();
         String hashedPassword = PasswordHash.SHA256(etPassword);
-        Toast.makeText(LoginActivity.this, "Hashed: "+hashedPassword, Toast.LENGTH_LONG).show();
         SQLiteDatabase objDb = new Database(LoginActivity.this, "RSFDB").getReadableDatabase();
         Cursor c = objDb.query(Database.tblUsers,
                 new String[]{User.ID, User.Name, User.Email, User.Address, User.Region,User.Password},
@@ -69,9 +69,10 @@ public class LoginActivity extends AppCompatActivity {
             c.moveToFirst();
             String dbEmail = c.getString(2);
             String dbPassword = c.getString(5);
-            Toast.makeText(LoginActivity.this, "DB pass: "+dbPassword, Toast.LENGTH_LONG).show();
             if(email.equals(dbEmail) && hashedPassword.equals(dbPassword)){
                 Toast.makeText(LoginActivity.this, "You have logged in successfully.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LoginActivity.this, ResortsActivity.class);
+                startActivity(intent);
             } else {
                 Toast.makeText(LoginActivity.this, "Email or password is incorrect.", Toast.LENGTH_LONG).show();
                 etEmail.requestFocus();

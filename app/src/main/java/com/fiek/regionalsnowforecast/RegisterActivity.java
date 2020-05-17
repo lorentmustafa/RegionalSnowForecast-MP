@@ -51,7 +51,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String hashedPass = PasswordHash.SHA256(etPassword);
-                Toast.makeText(RegisterActivity.this, "Hashed: "+hashedPass, Toast.LENGTH_LONG).show();
                 ContentValues cv = new ContentValues();
                 cv.put(User.Name, etName.getText().toString());
                 cv.put(User.Email, etEmail.getText().toString());
