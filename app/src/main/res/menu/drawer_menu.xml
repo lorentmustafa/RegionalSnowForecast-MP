@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Ski Resorts">
+        <menu>
+            <item
+                android:id="@+id/nav_resorts"
+                android:icon="@drawable/ic_resorts"
+                android:title="Available Resorts" />
+            <item
+                android:id="@+id/nav_myResorts"
+                android:icon="@drawable/ic_my_resorts"
+                android:title="My resorts" />
+        </menu>
+    </item>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_logOut"
+            android:title="Log out" />
+    </group>
+</menu>

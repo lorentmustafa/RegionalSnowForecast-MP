@@ -22,5 +22,8 @@
     <string name="passwordmatcherror">Passwords do not match!</string>
     <string name="emptyconfirmpassword">Confirm Password can not be empty!</string>
     <string name="accountalreadyexists">An account with this email already exists!</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 
 </resources>
