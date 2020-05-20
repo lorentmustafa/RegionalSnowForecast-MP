@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "72331424341",
+    "firebase_url": "https://regionalsnowforecast-82dba.firebaseio.com",
+    "project_id": "regionalsnowforecast-82dba",
+    "storage_bucket": "regionalsnowforecast-82dba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72331424341:android:b269b5850b8e52f8115adc",
+        "android_client_info": {
+          "package_name": "com.fiek.regionalsnowforecast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72331424341-c5aofoq54c5g7d8136qjdu3t7sk2g1s9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fiek.regionalsnowforecast",
+            "certificate_hash": "e1482d8b7627431982284d0ade4eff2a7458c01c"
+          }
+        },
+        {
+          "client_id": "72331424341-ngtr5j57eb4u9tl0o83i3vtqi5hkb1dk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJCDJbJKnMFNBg7gfFHNF8xAwxtyh4KcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72331424341-ngtr5j57eb4u9tl0o83i3vtqi5hkb1dk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RegionalSnowForecast</string>
+    <string name="app_name">Balkans Snow</string>
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
     <string name="register">Register</string>
@@ -24,6 +24,7 @@
     <string name="accountalreadyexists">An account with this email already exists!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="brezovicaskiresort">Brezovica, Republic of Kosovo</string>
 
 
 </resources>

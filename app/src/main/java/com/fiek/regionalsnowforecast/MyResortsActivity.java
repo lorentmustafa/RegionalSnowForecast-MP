@@ -1,12 +1,14 @@
 package com.fiek.regionalsnowforecast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,14 +16,20 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class ResortsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.ArrayList;
+
+public class MyResortsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawer;
-
+    private ArrayList<String> mResortNames = new ArrayList<>();
+    private ArrayList<String> mResortImagesURL = new ArrayList<>();
+//    private int[] logos = {
+//            R.drawable.pic1, R.drawable.pic2, R.drawable.pic3, R.drawable.pic4, R.drawable.pic5
+//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resorts);
+        setContentView(R.layout.activity_myresorts);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -35,31 +43,41 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        initImageBitmaps();
+    }
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_resort1, new BrezovicaResortFragment())
-                    .replace(R.id.fragment_resort2, new MavrovoResortFragment())
-                    .replace(R.id.fragment_resort3, new PopovaSapkaResortFragment())
-                    .commit();
-            navigationView.setCheckedItem(R.id.nav_resorts);
-        }
+    private void initImageBitmaps(){
+        mResortImagesURL.add("https://i.imgur.com/8iLVJjC.jpg");
+        mResortNames.add("Brezovica, Republic of Kosovo");
+
+        mResortImagesURL.add("https://i.imgur.com/8iLVJjC.jpg");
+        mResortNames.add("Brezovica, Republic of Kosovo");
+
+        initRecyclerView();
+
+    }
+
+    private void initRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        MyResortsAdapter adapter = new MyResortsAdapter(this, mResortNames, mResortImagesURL);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_myResorts:
-                Intent intent = new Intent(ResortsActivity.this, MyResortsActivity.class);
-                startActivity(intent);
+                finish();
+                startActivity(getIntent());
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();
                 break;
             case R.id.nav_resorts:
-                finish();
-                startActivity(getIntent());
+                Intent intent = new Intent(MyResortsActivity.this, ResortsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_logOut:
                 Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
