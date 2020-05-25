@@ -7,5 +7,4 @@ public class User {
     public static final String Address = "address";
     public static final String Region = "region";
     public static final String Password = "password";
-    public static final String ConfirmPassword = "confirmPassword";
 }

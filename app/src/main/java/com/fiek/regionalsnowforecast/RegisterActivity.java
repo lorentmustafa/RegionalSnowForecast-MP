@@ -31,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView tvBackToLogin;
     EditText etName, etEmail, etAddress, etRegion, etPassword, etConfirmPassword;
     Button btnRegister;
+    Utils utils = new Utils();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String hashedPass = PasswordHash.SHA256(etPassword);
+                String hashedPass = utils.SHA256(etPassword);
                 ContentValues cv = new ContentValues();
                 cv.put(User.Name, etName.getText().toString());
                 cv.put(User.Email, etEmail.getText().toString());

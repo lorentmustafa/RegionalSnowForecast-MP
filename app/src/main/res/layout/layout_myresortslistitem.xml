@@ -1,24 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/myresortlistlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/myresortlistlayout"
     android:padding="10dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/myresortimage"
-        android:src="@mipmap/ic_launcher"/>
+    <RelativeLayout
+        android:id="@+id/resorts_layout_item"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/brezobackground">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/myresortimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher" />
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Resort"
-        android:textSize="30sp"
-        android:id="@+id/myresortname"
-        android:layout_toRightOf="@id/myresortimage"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"/>
+        <TextView
+            android:id="@+id/myresortname"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@id/myresortimage"
+            android:text="My Resort"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/myresortlocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/myresortname"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/myresortimage"
+            android:text="Loaction"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/addFav"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_add" />
+
+    </RelativeLayout>
 </RelativeLayout>

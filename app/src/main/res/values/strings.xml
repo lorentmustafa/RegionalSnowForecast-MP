@@ -25,6 +25,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="brezovicaskiresort">Brezovica, Republic of Kosovo</string>
-
+    <string name="add_favr">Added to Favorites</string>
+    <string name="remove_favr">Removed from Favorites</string>
+    <string name="no_favorites_items">No Favorites</string>
+    <string name="no_favorites_msg">Click on the add(+) button to add to favorites.</string>
 
 </resources>

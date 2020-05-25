@@ -7,16 +7,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.preference.PreferenceManager;
+
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class ResortsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    Utils utils = new Utils();
+    TextView tvNavEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +45,10 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View nav_header = navigationView.getHeaderView(0);
+        tvNavEmail = nav_header.findViewById(R.id.nav_email);
+        tvNavEmail.setText(utils.getSessionEmail(ResortsActivity.this));
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -38,9 +57,7 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_resort1, new BrezovicaResortFragment())
-                    .replace(R.id.fragment_resort2, new MavrovoResortFragment())
-                    .replace(R.id.fragment_resort3, new PopovaSapkaResortFragment())
+                    .replace(R.id.fragment_container, new ResortsFragment())
                     .commit();
             navigationView.setCheckedItem(R.id.nav_resorts);
         }
@@ -50,19 +67,24 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.nav_myResorts:
-                Intent intent = new Intent(ResortsActivity.this, MyResortsActivity.class);
-                startActivity(intent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MyResortsFragment()).commit();
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();
                 break;
             case R.id.nav_resorts:
-                finish();
-                startActivity(getIntent());
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new ResortsFragment())
+                        .commit();
                 break;
             case R.id.nav_logOut:
-                Toast.makeText(this, "Logged out!", Toast.LENGTH_SHORT).show();
+                utils.removeSession(ResortsActivity.this, "remove");
+                Toast.makeText(ResortsActivity.this, "Logged out from Resorts.", Toast.LENGTH_SHORT).show();
+                Intent loginIntent = new Intent(ResortsActivity.this, LoginActivity.class);
+                loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(loginIntent);
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -76,4 +98,6 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
             super.onBackPressed();
         }
     }
+
+
 }

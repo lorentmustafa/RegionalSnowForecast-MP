@@ -24,7 +24,6 @@ public class Database extends SQLiteOpenHelper {
                 User.Region +" text not null,"+
                 User.Password +" text not null"+
                 ")";
-//        Email must be unique
         db.execSQL(strQuery);
 
     }
