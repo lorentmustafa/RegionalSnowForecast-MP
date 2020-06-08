@@ -8,17 +8,21 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResortsFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
+    RelativeLayout relativeLayout;
     Activity activity;
     ListView resortsListView;
     List<Resorts> favorites;
@@ -30,6 +34,7 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
         super.onCreate(savedInstanceState);
         activity = getActivity();
         utils = new Utils();
+
     }
 
     @Nullable
@@ -38,7 +43,7 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
         View view =  inflater.inflate(R.layout.fragment_resorts, container, false);
 
         findViewsById(view);
-
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.resortsfragment);
         setFavoriteResorts();
 
         resortsAdapter = new ResortsAdapter(activity, favorites);
@@ -77,14 +82,26 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> arg0, View view, int position, long arg3) {
-        ImageView button = (ImageView) view.findViewById(R.id.addFav);
+    public boolean onItemLongClick(AdapterView<?> arg0, View view, final int position, long arg3) {
+        final ImageView button = (ImageView) view.findViewById(R.id.addFav);
         String tag = button.getTag().toString();
+
         if(tag.equalsIgnoreCase("notAdded")){
             utils.addFavorite(activity, favorites.get(position));
-            Toast.makeText(activity, activity.getResources().getString(R.string.add_favr), Toast.LENGTH_SHORT).show();
             button.setTag("added");
             button.setImageResource(R.drawable.ic_remove);
+//            Toast.makeText(activity, activity.getResources().getString(R.string.add_favr), Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(relativeLayout, "Resort added to Favorites", Snackbar.LENGTH_LONG)
+                    .setAction("UNDO", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            utils.removeFavorite(activity, favorites.get(position));
+                            button.setTag("notAdded");
+                            button.setImageResource(R.drawable.ic_add);
+                            Toast.makeText(activity, activity.getResources().getString(R.string.remove_favr), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            snackbar.show();
         } else {
             utils.removeFavorite(activity, favorites.get(position));
             button.setTag("notAdded");
@@ -93,4 +110,6 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
         }
         return true;
     }
+
+
 }

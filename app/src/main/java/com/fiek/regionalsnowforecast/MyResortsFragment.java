@@ -77,7 +77,7 @@ public class MyResortsFragment extends Fragment {
                             utils.removeFavorite(activity, favorites.get(position));
                             Toast.makeText(activity, activity.getResources().getString(R.string.remove_favr), Toast.LENGTH_SHORT).show();
                             button.setTag("notAdded");
-                            button.setImageResource(R.drawable.ic_remove);
+                            button.setImageResource(R.drawable.ic_add);
                         }
                         return true;
                     }

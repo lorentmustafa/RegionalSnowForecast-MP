@@ -1,43 +1,36 @@
 package com.fiek.regionalsnowforecast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.preference.PreferenceManager;
-
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 public class ResortsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
     Utils utils = new Utils();
     TextView tvNavEmail;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resorts);
-
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,13 +40,12 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
 
         View nav_header = navigationView.getHeaderView(0);
         tvNavEmail = nav_header.findViewById(R.id.nav_email);
-        tvNavEmail.setText(utils.getSessionEmail(ResortsActivity.this));
+        tvNavEmail.setText(user.getEmail());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -80,8 +72,8 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
                         .commit();
                 break;
             case R.id.nav_logOut:
-                utils.removeSession(ResortsActivity.this, "remove");
-                Toast.makeText(ResortsActivity.this, "Logged out from Resorts.", Toast.LENGTH_SHORT).show();
+                FirebaseAuth.getInstance().signOut();
+                finish();
                 Intent loginIntent = new Intent(ResortsActivity.this, LoginActivity.class);
                 loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(loginIntent);
@@ -98,6 +90,5 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
             super.onBackPressed();
         }
     }
-
 
 }

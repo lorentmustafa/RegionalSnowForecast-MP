@@ -1,6 +1,8 @@
 package com.fiek.regionalsnowforecast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -12,31 +14,42 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.regex.Pattern;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView ivRegisterBack;
     TextView tvBackToLogin;
     EditText etName, etEmail, etAddress, etRegion, etPassword, etConfirmPassword;
     Button btnRegister;
     Utils utils = new Utils();
+    ProgressBar progressBar;
+    FirebaseAuth mAuth;
+    FirebaseDatabase userDatabase;
+    DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        mAuth = FirebaseAuth.getInstance();
+
 
         ivRegisterBack = findViewById(R.id.ivRegisterBack);
         tvBackToLogin = findViewById(R.id.tvBackToLogin);
@@ -47,40 +60,52 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnRegister = findViewById(R.id.btnRegister);
+        progressBar = findViewById(R.id.registerProgressBar);
+        TextView tvSignup = findViewById(R.id.tvSignUp);
+        ConstraintLayout registerBackground = findViewById(R.id.registerBackground);
+        tvSignup.setOnClickListener(this);
+        registerBackground.setOnClickListener(this);
+
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String hashedPass = utils.SHA256(etPassword);
-                ContentValues cv = new ContentValues();
-                cv.put(User.Name, etName.getText().toString());
-                cv.put(User.Email, etEmail.getText().toString());
-                cv.put(User.Address, etAddress.getText().toString());
-                cv.put(User.Region, etRegion.getText().toString());
-                cv.put(User.Password, hashedPass);
 
-                SQLiteDatabase objDb = new Database(RegisterActivity.this, "RSFDB").getWritableDatabase();
-
+                addUsers();
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString();
+                progressBar.setVisibility(View.VISIBLE);
                 try {
                     if (checkRegisterInput()) {
-                        long affected = objDb.insert(Database.tblUsers, null, cv);
-                        if (affected > 0) {
-                            Toast.makeText(RegisterActivity.this, "Signed up successfully!", Toast.LENGTH_LONG).show();
-                        }
+                        progressBar.setVisibility(View.GONE);
+                        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                progressBar.setVisibility(View.GONE);
+                                if (task.isSuccessful()) {
+                                    finish();
+                                    startActivity(new Intent(RegisterActivity.this, ResortsActivity.class));
+                                    Toast.makeText(RegisterActivity.this, "Signed up successfully on firebase!", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(RegisterActivity.this, "Error occured", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
                     }
                 } catch (Exception ex) {
                     Log.e("asd", ex.getMessage());
-                } finally {
-                    objDb.close();
                 }
             }
         });
+
 
         ivRegisterBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.rightenter, R.anim.rightexit);
             }
         });
 
@@ -89,8 +114,31 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.rightenter, R.anim.rightexit);
             }
         });
+    }
+
+    public void addUsers() {
+        userDatabase = FirebaseDatabase.getInstance();
+        reference = userDatabase.getReference("users");
+        final String name = etName.getText().toString().trim();
+        final String email = etEmail.getText().toString().trim();
+        final String address = etAddress.getText().toString().trim();
+        final String region = etRegion.getText().toString().trim();
+        progressBar.setVisibility(View.VISIBLE);
+        try {
+            if (checkRegisterInput()) {
+                progressBar.setVisibility(View.GONE);
+                String id = reference.push().getKey();
+                User user = new User(name, email, address, region);
+
+                reference.child(id).setValue(user);
+                Toast.makeText(RegisterActivity.this, "user registered on db", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception ex) {
+            Log.e("asd", ex.getMessage());
+        }
     }
 
     public static boolean isEmail(EditText etInput) {
@@ -116,26 +164,8 @@ public class RegisterActivity extends AppCompatActivity {
         return !TextUtils.isEmpty(strPassword) && PASSWORD_PATTERN.matcher(strPassword).matches();
     }
 
-    public boolean emailAvailibility(EditText etInput){
-        CharSequence strEmail = etInput.getText().toString();
-        String email = strEmail.toString();
-        SQLiteDatabase objDb = new Database(RegisterActivity.this, "RSFDB").getReadableDatabase();
-        Cursor c = objDb.query(Database.tblUsers,
-                new String[]{User.ID, User.Name, User.Email, User.Address, User.Region,User.Password},
-                User.Email + "=?" , new String[]{email}, "", "", "");
-        boolean exists = false;
-        if(c.getCount() == 1){
-            c.moveToFirst();
-            String dbEmail = c.getString(2);
-            if(strEmail.equals(dbEmail)){
-                exists = true;
-            }
-        }
-        return exists;
-    }
-
-
     public boolean checkRegisterInput() {
+
         if (isEmpty(etName)) {
             etName.setError(getText(R.string.nameerror));
             etName.requestFocus();
@@ -161,14 +191,18 @@ public class RegisterActivity extends AppCompatActivity {
             etConfirmPassword.requestFocus();
             return false;
         } else if (!passwordsMatch(etPassword, etConfirmPassword)) {
-            Toast.makeText(RegisterActivity.this, getText(R.string.passwordmatcherror) , Toast.LENGTH_LONG).show();
-            return false;
-        } else if (emailAvailibility(etEmail)){
-            Toast.makeText(RegisterActivity.this, getText(R.string.accountalreadyexists), Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this, getText(R.string.passwordmatcherror), Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.tvSignUp || v.getId() == R.id.registerBackground) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 }

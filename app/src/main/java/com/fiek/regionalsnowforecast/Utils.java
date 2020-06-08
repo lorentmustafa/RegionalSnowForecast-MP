@@ -2,10 +2,13 @@ package com.fiek.regionalsnowforecast;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import androidx.preference.PreferenceManager;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import java.math.BigInteger;
@@ -88,51 +91,5 @@ public class Utils {
         }
         return null;
     }
-
-
-    public static boolean setBoolPreference(String key, Boolean value, Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(key, value);
-        editor.commit();
-        return true;
-    }
-
-    public static Boolean getBoolPreference(String key, Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getBoolean(key, false);
-    }
-
-
-
-    public void saveSession(String id, String email, Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putString("sessionUserId", id);
-        editor.putString("sessionUserEmail", email);
-        editor.commit();
-
-    }
-
-    public String getSessionId(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        return preferences.getString("sessionUserId", "remove");
-    }
-
-    public String getSessionEmail(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        return preferences.getString("sessionUserEmail", "");
-    }
-
-    public void removeSession(Context context, String value){
-        SharedPreferences preferences = context.getSharedPreferences("session", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putString("sessionUserId", value).commit();
-    }
-
 
 }
