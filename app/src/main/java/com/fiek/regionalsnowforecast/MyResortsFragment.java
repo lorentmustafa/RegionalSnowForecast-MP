@@ -58,6 +58,15 @@ public class MyResortsFragment extends Fragment {
                 myResortsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
+                        Resorts favoriteResort = (Resorts) parent.getItemAtPosition(position);
+
+
+                        if(favoriteResort.getrId() == 1) {
+                            (getActivity()).getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container, new BrezovicaResortFragment())
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
 
                     }
                 });

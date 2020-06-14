@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "72331424341-58vmkpod0gp5b7p3qals0g393pg7son2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fiek.regionalsnowforecast",
+            "certificate_hash": "a9427c84b768fda75d056e5dea69f6703a3aa126"
+          }
+        },
+        {
           "client_id": "72331424341-c5aofoq54c5g7d8136qjdu3t7sk2g1s9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -113,10 +113,10 @@
 
     <Button
         android:id="@+id/btnSaveProfile"
-        android:layout_width="162dp"
+        android:layout_width="100dp"
         android:layout_height="53dp"
         android:text="SAVE"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:background="@drawable/button"
         app:layout_constraintTop_toBottomOf="@+id/myActivity"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,11 +124,10 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
     <Button
         android:id="@+id/btnShowProfile"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:paddingLeft="20dp"
-        android:text="SAVE"
-        android:textSize="20sp"
+        android:layout_width="100dp"
+        android:layout_height="53dp"
+        android:text="SHOW"
+        android:textSize="18sp"
         android:background="@drawable/button"
         app:layout_constraintTop_toBottomOf="@+id/btnSaveProfile"
         app:layout_constraintStart_toStartOf="parent"

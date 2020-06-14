@@ -9,16 +9,31 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnLogin;
     TextView tvMainRegister;
     Utils utils = new Utils();
+    FirebaseAuth mAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        if(user != null){
+            finish();
+            Intent resortsIntent = new Intent(MainActivity.this, ResortsActivity.class);
+            resortsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(resortsIntent);
+        }
 
         btnLogin = findViewById(R.id.btnLogin);
         tvMainRegister = findViewById(R.id.tvMainRegister);

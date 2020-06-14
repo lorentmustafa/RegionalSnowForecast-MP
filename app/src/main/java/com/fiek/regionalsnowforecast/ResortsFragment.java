@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -79,6 +80,17 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Resorts favoriteResort = (Resorts) parent.getItemAtPosition(position);
         Toast.makeText(activity, favoriteResort.toString(), Toast.LENGTH_LONG).show();
+
+        int pos = (int) parent.getPositionForView(view);
+
+
+        if(pos == 0){
+            (getActivity()).getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new BrezovicaResortFragment())
+                    .addToBackStack(null)
+                    .commit();
+        }
+
     }
 
     @Override

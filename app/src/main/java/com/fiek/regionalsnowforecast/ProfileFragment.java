@@ -39,6 +39,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -70,6 +71,7 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference dbReference;
     private String email;
     private Button btnShow;
+    private User userObj = new User();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference("imageuploads");
         userDatabase = FirebaseDatabase.getInstance();
-        dbReference = userDatabase.getReference(mAuth.getUid());
+        dbReference = userDatabase.getReference("users");
         user = mAuth.getCurrentUser();
 
         Intent intent = new Intent();
@@ -88,6 +90,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        getUserData();
     }
 
     @Nullable
@@ -114,27 +117,7 @@ public class ProfileFragment extends Fragment {
                 saveUserInfo();
             }
 
-        });
-        btnShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dbReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String name = dataSnapshot.child("name").getValue().toString();
-                        String email = dataSnapshot.child("email").getValue().toString();
-                        String region = dataSnapshot.child("region").getValue().toString();
-                        tvProfileName.setText(name);
-                        tvProfileEmail.setText(email);
-                        tvProfileRegion.setText(region);
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(getActivity(), databaseError.getCode(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
         });
 
         profilePicture.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +150,27 @@ public class ProfileFragment extends Fragment {
                 ex.printStackTrace();
             }
         }
+    }
+
+    private void getUserData(){
+        dbReference.orderByChild("email").equalTo(mAuth.getCurrentUser().getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot datas: dataSnapshot.getChildren()){
+                    String name = datas.child("name").getValue().toString();
+                    String email = datas.child("email").getValue().toString();
+                    String region = datas.child("region").getValue().toString();
+                    tvProfileName.setText(name);
+                    tvProfileEmail.setText(email);
+                    tvProfileRegion.setText(region);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void showImageChooser() {
