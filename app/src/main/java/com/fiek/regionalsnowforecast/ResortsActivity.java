@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 public class ResortsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    Utils utils = new Utils();
     TextView tvNavEmail;
     private FirebaseAuth mAuth;
 
@@ -33,8 +32,6 @@ public class ResortsActivity extends AppCompatActivity implements NavigationView
         FirebaseUser user = mAuth.getCurrentUser();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);

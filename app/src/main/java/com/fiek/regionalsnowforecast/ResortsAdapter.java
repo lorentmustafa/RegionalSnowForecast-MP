@@ -2,11 +2,13 @@ package com.fiek.regionalsnowforecast;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -31,6 +33,7 @@ public class ResortsAdapter extends ArrayAdapter<Resorts> {
         TextView tvResortName;
         TextView tvResortLocation;
         ImageView btnAddFav;
+        RelativeLayout listItem;
     }
 
     @Override
@@ -65,6 +68,7 @@ public class ResortsAdapter extends ArrayAdapter<Resorts> {
                     .findViewById(R.id.myresortlocation);
             holder.btnAddFav = (ImageView) convertView
                     .findViewById(R.id.addFav);
+            holder.listItem = (RelativeLayout) convertView.findViewById(R.id.resorts_layout_item);
 
             convertView.setTag(holder);
         } else {
@@ -75,7 +79,7 @@ public class ResortsAdapter extends ArrayAdapter<Resorts> {
         holder.favResortImage.setImageResource(favoriteResort.getrImage());
         holder.tvResortName.setText(favoriteResort.getName());
         holder.tvResortLocation.setText(favoriteResort.getLocation());
-
+        holder.listItem.setBackgroundResource(favoriteResort.getrListitemImage());
         if (checkFavoriteResort(favoriteResort)) {
             holder.btnAddFav.setImageResource(R.drawable.ic_remove);
             holder.btnAddFav.setTag("added");
@@ -86,6 +90,7 @@ public class ResortsAdapter extends ArrayAdapter<Resorts> {
 
         return convertView;
     }
+
 
     public boolean checkFavoriteResort(Resorts checkResort){
         boolean check = false;

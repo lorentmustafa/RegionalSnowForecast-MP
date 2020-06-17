@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,11 +21,12 @@ import java.util.List;
 
 public class MyResortsFragment extends Fragment {
 
-    ListView myResortsList;
-    Activity activity;
-    Utils utils;
-    List<Resorts> favorites;
-    ResortsAdapter resortsAdapter;
+    private ListView myResortsList;
+    private Activity activity;
+    private Utils utils;
+    private List<Resorts> favorites;
+    private ResortsAdapter resortsAdapter;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +38,6 @@ public class MyResortsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_resorts, container, false);
-
         utils = new Utils();
         favorites = utils.getFavorites(activity);
 
@@ -59,15 +60,41 @@ public class MyResortsFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3) {
                         Resorts favoriteResort = (Resorts) parent.getItemAtPosition(position);
+                        switch (favoriteResort.getrId()){
+                            case 1:
+                                (getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, new BrezovicaResortFragment())
+                                        .addToBackStack(null)
+                                        .commit();
+                                break;
+                            case 2:
+                                (getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, new MavrovoResortFragment())
+                                        .addToBackStack(null)
+                                        .commit();
+                                break;
+                            case 3:
+                                (getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, new PopovaSapkaResortFragment())
+                                        .addToBackStack(null)
+                                        .commit();
+                                break;
+                            case 4:
+                                (getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, new BanskoResortFragment())
+                                        .addToBackStack(null)
+                                        .commit();
+                                break;
+                            case 5:
+                                (getActivity()).getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, new KolasinResortFragment())
+                                        .addToBackStack(null)
+                                        .commit();
+                                break;
+                            default:
+                                Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
 
-
-                        if(favoriteResort.getrId() == 1) {
-                            (getActivity()).getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, new BrezovicaResortFragment())
-                                    .addToBackStack(null)
-                                    .commit();
                         }
-
                     }
                 });
 

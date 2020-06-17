@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
@@ -70,8 +71,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseDatabase userDatabase;
     private DatabaseReference dbReference;
     private String email;
-    private Button btnShow;
-    private User userObj = new User();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,8 +102,6 @@ public class ProfileFragment extends Fragment {
         tvProfileName = view.findViewById(R.id.myName);
         tvProfileEmail = view.findViewById(R.id.myEmail);
         tvProfileRegion = view.findViewById(R.id.myRegion);
-        btnShow = view.findViewById(R.id.btnShowProfile);
-
         return view;
     }
 
@@ -246,5 +243,4 @@ public class ProfileFragment extends Fragment {
                     });
         }
     }
-
 }

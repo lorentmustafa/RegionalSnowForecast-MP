@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#EDEDED" >
 
+
     <ListView
         android:id="@+id/list_resorts"
         android:layout_width="fill_parent"

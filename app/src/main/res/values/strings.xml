@@ -29,5 +29,6 @@
     <string name="remove_favr">Removed from Favorites</string>
     <string name="no_favorites_items">No Favorites</string>
     <string name="no_favorites_msg">Click on the add(+) button to add to favorites.</string>
+    <string name="grade">\u00B0</string>
 
 </resources>

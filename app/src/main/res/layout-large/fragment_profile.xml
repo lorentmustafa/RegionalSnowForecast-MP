@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profilefragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/myprofilepicture"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="128dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/myName"
+        android:layout_width="380dp"
+        android:layout_height="60sp"
+        android:layout_marginTop="16dp"
+        android:alpha="0.5"
+        android:padding="15dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:text="@string/name"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/purple"
+        android:textColorHint="@color/purple"
+        app:layout_constraintTop_toBottomOf="@+id/myprofilepicture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.98" />
+
+    <TextView
+        android:id="@+id/myEmail"
+        android:layout_width="380dp"
+        android:layout_height="60sp"
+        android:layout_marginTop="16dp"
+        android:alpha="0.5"
+        android:padding="15dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:text="@string/email"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/purple"
+        android:textColorHint="@color/purple"
+        app:layout_constraintTop_toBottomOf="@+id/myName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.98" />
+
+    <TextView
+        android:id="@+id/myRegion"
+        android:layout_width="380dp"
+        android:layout_height="60sp"
+        android:layout_marginTop="16dp"
+        android:alpha="0.5"
+        android:padding="15dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:text="@string/region"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/purple"
+        android:textColorHint="@color/purple"
+        app:layout_constraintTop_toBottomOf="@+id/myEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.98" />
+
+    <EditText
+        android:id="@+id/myActivity"
+        android:layout_width="380dp"
+        android:layout_height="60sp"
+        android:layout_marginTop="16dp"
+        android:alpha="0.5"
+        android:padding="15dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:text="Ski or Snowboard"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/purple"
+        android:textColorHint="@color/purple"
+        app:layout_constraintTop_toBottomOf="@+id/myRegion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.98" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:max="100"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.572" />
+
+    <Button
+        android:id="@+id/btnSaveProfile"
+        android:layout_width="130dp"
+        android:layout_height="53dp"
+        android:background="@drawable/button"
+        android:text="SAVE"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myActivity"
+        app:layout_constraintVertical_bias="0.113" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

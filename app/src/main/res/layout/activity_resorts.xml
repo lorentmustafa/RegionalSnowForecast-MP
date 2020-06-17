@@ -22,8 +22,8 @@
             android:background="@color/purple"
             android:elevation="4dp"
             android:textAlignment="center"
-            app:title="Ski Resorts"
-            app:titleTextColor="@color/white" />
+            app:title="@string/app_name"
+            app:titleTextColor="@color/white"/>
 
         <FrameLayout
             android:id="@+id/fragment_container"

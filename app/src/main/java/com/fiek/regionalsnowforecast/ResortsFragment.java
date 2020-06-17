@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,17 +19,19 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResortsFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-    RelativeLayout relativeLayout;
-    Activity activity;
-    ListView resortsListView;
-    List<Resorts> favorites;
-    ResortsAdapter resortsAdapter;
-    Utils utils;
+    private RelativeLayout relativeLayout;
+    private Activity activity;
+    private ListView resortsListView;
+    private List<Resorts> favorites;
+    private ResortsAdapter resortsAdapter;
+    private Utils utils;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -42,7 +45,6 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_resorts, container, false);
-
         findViewsById(view);
         relativeLayout = (RelativeLayout) view.findViewById(R.id.resortsfragment);
         setFavoriteResorts();
@@ -55,13 +57,12 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
         return view;
     }
 
-
     private void setFavoriteResorts() {
-        Resorts resort1 = new Resorts(1, "Brezovica Resort", "Shterpce, Kosovo", R.drawable.brezobackground);
-        Resorts resort2 = new Resorts(2, "Mavrovo Resort", "Shterpce, Kosovo", R.drawable.brezobackground);
-        Resorts resort3 = new Resorts(3, "Popova Sapka Resort", "Shterpce, Kosovo", R.drawable.brezobackground);
-        Resorts resort4 = new Resorts(4, "Bansko Resort", "Shterpce, Kosovo", R.drawable.brezobackground);
-        Resorts resort5 = new Resorts(5, "Kolasin Resort", "Shterpce, Kosovo", R.drawable.brezobackground);
+        Resorts resort1 = new Resorts(1, "Brezovica Resort", "Shterpce, Kosovo", R.drawable.brezovicaview, R.drawable.brezovicaview);
+        Resorts resort2 = new Resorts(2, "Mavrovo Resort", "Polog, North Macedonia", R.drawable.mavrovoview, R.drawable.mavrovoview);
+        Resorts resort3 = new Resorts(3, "Popova Sapka Resort", "Tetovo, North Macedonia", R.drawable.popovasapkaview,R.drawable.popovasapkaview);
+        Resorts resort4 = new Resorts(4, "Bansko Resort", "Bansko, Bulgaria", R.drawable.banskoview, R.drawable.banskoview);
+        Resorts resort5 = new Resorts(5, "Kolasin Resort", "Kolasin, Montenegro", R.drawable.kolasinview,R.drawable.kolasinview);
 
         favorites = new ArrayList<Resorts>();
         favorites.add(resort1);
@@ -79,16 +80,42 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Resorts favoriteResort = (Resorts) parent.getItemAtPosition(position);
-        Toast.makeText(activity, favoriteResort.toString(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(activity, favoriteResort.toString(), Toast.LENGTH_LONG).show();
 
-        int pos = (int) parent.getPositionForView(view);
-
-
-        if(pos == 0){
-            (getActivity()).getSupportFragmentManager().beginTransaction()
+        switch (favoriteResort.getrId()){
+            case 1:
+                (getActivity()).getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new BrezovicaResortFragment())
                     .addToBackStack(null)
                     .commit();
+                break;
+            case 2:
+                (getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MavrovoResortFragment())
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case 3:
+                (getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new PopovaSapkaResortFragment())
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case 4:
+                (getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new BanskoResortFragment())
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case 5:
+                (getActivity()).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new KolasinResortFragment())
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            default:
+                Toast.makeText(getActivity(), "Oops! Something went wrong.", Toast.LENGTH_SHORT).show();
+
         }
 
     }

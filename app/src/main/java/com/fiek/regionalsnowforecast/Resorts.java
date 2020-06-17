@@ -5,17 +5,19 @@ public class Resorts {
     private String name;
     private String location;
     private int rImage;
+    private int rListitemImage;
 
     public Resorts() {
         super();
     }
 
-    public Resorts(int rId, String name, String location, int rImage) {
+    public Resorts(int rId, String name, String location, int rImage, int rListitemImage) {
         super();
         this.rId = rId;
         this.name = name;
         this.location = location;
         this.rImage = rImage;
+        this.rListitemImage = rListitemImage;
     }
 
     public int getrId() {
@@ -48,6 +50,14 @@ public class Resorts {
 
     public void setrImage(int rImage) {
         this.rImage = rImage;
+    }
+
+    public int getrListitemImage() {
+        return rListitemImage;
+    }
+
+    public void setrListitemImage(int rListitemImage) {
+        this.rListitemImage = rListitemImage;
     }
 
     @Override
