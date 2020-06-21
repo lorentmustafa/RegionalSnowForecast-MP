@@ -73,10 +73,4 @@ public class Resorts {
             return false;
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Resort [id=" + rId + ", name=" + name + ", location="
-                + location + "]";
-    }
 }

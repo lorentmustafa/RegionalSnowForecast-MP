@@ -30,7 +30,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView tvLoginRegister;
     EditText etEmail, etPassword;
     Button btnLogin;
-    Utils utils = new Utils();
     private FirebaseAuth mAuth;
 
 
@@ -88,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Log in successful", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, getResources().getString(R.string.login_successful), Toast.LENGTH_LONG).show();
                         finish();
                         Intent intent = new Intent(LoginActivity.this, ResortsActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

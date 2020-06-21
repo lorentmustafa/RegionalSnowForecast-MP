@@ -36,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     TextView tvBackToLogin;
     EditText etName, etEmail, etAddress, etRegion, etPassword, etConfirmPassword;
     Button btnRegister;
-    Utils utils = new Utils();
     ProgressBar progressBar;
     FirebaseAuth mAuth;
     FirebaseDatabase userDatabase;
@@ -84,10 +83,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     finish();
-                                    startActivity(new Intent(RegisterActivity.this, ResortsActivity.class));
-                                    Toast.makeText(RegisterActivity.this, "Signed up successfully on firebase!", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(RegisterActivity.this, ResortsActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                    Toast.makeText(RegisterActivity.this, getResources().getString(R.string.user_signed_up), Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(RegisterActivity.this, "Error occured", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(RegisterActivity.this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -131,13 +132,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if (checkRegisterInput()) {
                 progressBar.setVisibility(View.GONE);
                 String id = reference.push().getKey();
-                User user = new User(name, email, address, region);
+                User user = new User(name, email, address, region, id);
 
                 reference.child(id).setValue(user);
-                Toast.makeText(RegisterActivity.this, "user registered on db", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception ex) {
-            Log.e("asd", ex.getMessage());
+            Log.e("Sign Up Error: ", ex.getMessage());
         }
     }
 

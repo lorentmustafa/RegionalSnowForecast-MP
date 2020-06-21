@@ -11,10 +11,11 @@
     <string name="address">Address</string>
     <string name="confirmPassword">Confirm Password</string>
     <string name="name">Name</string>
+    <string name="login_successful">Log in successful</string>
     <string name="helloThere">Hello there!</string>
     <string name="welcome">Welcome!</string>
     <string name="niceToSeeYouAgain">Nice to see you again!</string>
-    <string name="nameerror">Name must not be empty!</string>
+    <string name="nameerror">Name can not be empty!</string>
     <string name="emailerror">Enter a valid Email!</string>
     <string name="addresserror">Enter a valid Address!</string>
     <string name="regionerror">Enter a valid region!</string>
@@ -28,7 +29,15 @@
     <string name="add_favr">Added to Favorites</string>
     <string name="remove_favr">Removed from Favorites</string>
     <string name="no_favorites_items">No Favorites</string>
-    <string name="no_favorites_msg">Click on the add(+) button to add to favorites.</string>
+    <string name="no_favorites_msg">Click and hold the add(+) button to add to favorites.</string>
     <string name="grade">\u00B0</string>
+    <string name="fetching_data">Fetching data for this resort has finished!</string>
+    <string name="choose_image">Choose profile picture</string>
+    <string name="profile_updated">Profile Updated</string>
+    <string name="user_signed_up">You have signed up successfully. Welcome!</string>
+    <string name="something_went_wrong">Oops! Something went wrong.</string>
+    <string name="resort">Resort</string>
+    <string name="ski_snowboard">Ski or Snowboard</string>
+    <string name="save">SAVE</string>
 
 </resources>

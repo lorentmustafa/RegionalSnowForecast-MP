@@ -44,7 +44,7 @@
         android:layout_height="50sp"
         android:layout_marginTop="16dp"
         android:alpha="0.5"
-        android:padding="15dp"
+        android:padding="10dp"
         android:background="@drawable/input_field"
         android:ems="10"
         android:text="@string/email"
@@ -87,7 +87,7 @@
         android:padding="15dp"
         android:background="@drawable/input_field"
         android:ems="10"
-        android:text="Ski or Snowboard"
+        android:text="@string/ski_snowboard"
         android:textSize="18sp"
         android:textAlignment="center"
         android:textColor="@color/purple"
@@ -110,14 +110,14 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.572" />
+        app:layout_constraintVertical_bias="0.847" />
 
     <Button
         android:id="@+id/btnSaveProfile"
         android:layout_width="100dp"
         android:layout_height="53dp"
         android:background="@drawable/button"
-        android:text="SAVE"
+        android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 
 public class KolasinResortFragment extends Fragment {
 
-    private TextView tvSnow, tvHumidity, tvRain, tvFreezingLevel;
+    private TextView tvSnow, tvHumidity, tvRain, tvFreezingLevel, tvWind;
     private TextView tvMorning, tvNoon, tvAfternoon;
     private ImageView ivMorning, ivNoon, ivAfternoon;
     private TextView tvResortName;
@@ -48,6 +48,7 @@ public class KolasinResortFragment extends Fragment {
         tvSnow = view.findViewById(R.id.tvSnow);
         tvHumidity = view.findViewById(R.id.tvHumidity);
         tvRain = view.findViewById(R.id.tvRain);
+        tvWind = view.findViewById(R.id.tvWind);
         tvFreezingLevel = view.findViewById(R.id.tvFreezingLevel);
         ivMorning = view.findViewById(R.id.morningWeatherIcon);
         ivNoon = view.findViewById(R.id.middayWeatherIcon);
@@ -79,7 +80,7 @@ public class KolasinResortFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            return "Gathering data for this resort has finished!";
+            return getResources().getString(R.string.fetching_data);
         }
 
         @Override
@@ -100,6 +101,7 @@ public class KolasinResortFragment extends Fragment {
             tvHumidity.setText(new StringBuilder(forecastobj.getHumidity() + "%"));
             tvFreezingLevel.setText(new StringBuilder(forecastobj.getFreezinglevel() + "m"));
             tvRain.setText(new StringBuilder(forecastobj.getRain() + "mm"));
+            tvWind.setText(new StringBuilder(forecastobj.getWind()+"km/h"));
             Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             progressBar.setProgress(0);
             progressBar.setVisibility(View.INVISIBLE);

@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseDatabase userDatabase;
     private DatabaseReference dbReference;
     private String email;
+    private String userKey;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class ProfileFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getUserData();
+
     }
 
     @Nullable
@@ -102,12 +104,16 @@ public class ProfileFragment extends Fragment {
         tvProfileName = view.findViewById(R.id.myName);
         tvProfileEmail = view.findViewById(R.id.myEmail);
         tvProfileRegion = view.findViewById(R.id.myRegion);
+
+
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,9 +163,12 @@ public class ProfileFragment extends Fragment {
                     String name = datas.child("name").getValue().toString();
                     String email = datas.child("email").getValue().toString();
                     String region = datas.child("region").getValue().toString();
+                    String key = datas.child("key").getValue().toString();
                     tvProfileName.setText(name);
                     tvProfileEmail.setText(email);
                     tvProfileRegion.setText(region);
+
+                    userKey = key;
                 }
             }
 
@@ -174,7 +183,7 @@ public class ProfileFragment extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Choose profile picture"), CHOOSE_IMAGE);
+        startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.choose_image)), CHOOSE_IMAGE);
     }
 
     private String getFileExtension(Uri uri) {
@@ -196,6 +205,7 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void run() {
                             progressBar.setProgress(0);
+                            progressBar.setVisibility(View.GONE);
                         }
                     }, 5000);
 
@@ -237,7 +247,7 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), getResources().getString(R.string.profile_updated), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

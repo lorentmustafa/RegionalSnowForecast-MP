@@ -3,17 +3,18 @@ package com.fiek.regionalsnowforecast;
 public class User {
 
 
-    private String id, name, email, address, region;
+    private String id, name, email, address, region, key;
 
     public User(){
 
     }
 
-    public User(String name,String email,String address,String region){
+    public User(String name,String email,String address,String region, String key){
         this.name = name;
         this.email = email;
         this.address = address;
         this.region = region;
+        this.key = key;
     }
 
     public String getId() {
@@ -54,5 +55,13 @@ public class User {
 
     public void setRegion(String region) {
         this.region = region;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
