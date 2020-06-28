@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,7 +41,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResortsFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class ResortsFragment extends Fragment implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
 
     private RelativeLayout relativeLayout;
     private Activity activity;
@@ -48,6 +51,7 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
     private Utils utils;
     private FirebaseAuth mAuth;
     private DatabaseReference dbReference;
+    private Button btnMaps;
     public static String userKey;
 
     @Override
@@ -56,7 +60,6 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
         activity = getActivity();
         utils = new Utils();
         mAuth = FirebaseAuth.getInstance();
-
         dbReference = FirebaseDatabase.getInstance().getReference("users");
 
 
@@ -66,6 +69,7 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
     public void onStart() {
         super.onStart();
         getUserData();
+
     }
 
     @Nullable
@@ -80,7 +84,14 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
         resortsListView.setAdapter(resortsAdapter);
         resortsListView.setOnItemClickListener(this);
         resortsListView.setOnItemLongClickListener(this);
-
+        btnMaps = view.findViewById(R.id.btnMap);
+        btnMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -109,7 +120,6 @@ public class ResortsFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Resorts favoriteResort = (Resorts) parent.getItemAtPosition(position);
-
 
         switch (favoriteResort.getrId()) {
             case 1:

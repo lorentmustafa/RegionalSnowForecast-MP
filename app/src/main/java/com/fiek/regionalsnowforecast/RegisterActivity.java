@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     }
                 } catch (Exception ex) {
-                    Log.e("asd", ex.getMessage());
+                    Log.e("ERROR!", ex.getMessage());
                 }
             }
         });

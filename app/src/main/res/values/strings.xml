@@ -39,5 +39,6 @@
     <string name="resort">Resort</string>
     <string name="ski_snowboard">Ski or Snowboard</string>
     <string name="save">SAVE</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
